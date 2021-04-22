@@ -7,31 +7,8 @@ package sentry;
 
 option go_package = "./sentry;sentry";
 
-enum MessageId {
-  // eth64 announcement messages (no id)
-  NewBlockHashes = 0;
-  NewBlock = 1;
-  Transactions = 2;
-
-  // eth65 announcement messages (no id)
-  NewPooledTransactionHashes = 3;
-
-  // eth66 messages with request-id
-  GetBlockHeaders = 4;
-  GetBlockBodies = 5;
-  GetNodeData = 6;
-  GetReceipts = 7;
-  GetPooledTransactions = 8;
-  BlockHeaders = 9;
-  BlockBodies = 10;
-  NodeData = 11;
-  Receipts = 12;
-  PooledTransactions = 13;
-
-}
-
 message OutboundMessageData {
-  MessageId id = 1;
+  uint32 id = 1;
   bytes data = 2;
 }
 
@@ -65,7 +42,7 @@ message PeerMinBlockRequest {
 }
 
 message InboundMessage {
-  MessageId id = 1;
+  uint32 id = 1;
   bytes data = 2;
   types.H512 peer_id = 3;
 }
@@ -81,7 +58,11 @@ message StatusData {
   types.H256 best_hash = 3;
   Forks fork_data = 4;
   uint64 max_block = 5;
+
+  uint64 eth_protocol_version = 6;
 }
+
+message ReceiveMessagesRequest { repeated uint32 message_ids = 1; }
 
 service Sentry {
   rpc PenalizePeer(PenalizePeerRequest) returns (google.protobuf.Empty);
@@ -92,8 +73,5 @@ service Sentry {
       returns (SentPeers);
   rpc SendMessageToAll(OutboundMessageData) returns (SentPeers);
   rpc SetStatus(StatusData) returns (google.protobuf.Empty);
-  rpc ReceiveMessages(google.protobuf.Empty) returns (stream InboundMessage);
-  rpc ReceiveUploadMessages(google.protobuf.Empty)
-      returns (stream InboundMessage);
-  rpc ReceiveTxMessages(google.protobuf.Empty) returns (stream InboundMessage);
+  rpc ReceiveMessages(ReceiveMessagesRequest) returns (stream InboundMessage);
 }
