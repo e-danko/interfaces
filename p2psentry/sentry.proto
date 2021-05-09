@@ -8,26 +8,27 @@ package sentry;
 option go_package = "./sentry;sentry";
 
 enum MessageId {
+  Status = 0x00;
+
   // eth64 announcement messages (no id)
-  NewBlockHashes = 0;
-  NewBlock = 1;
-  Transactions = 2;
+  NewBlockHashes = 0x01;
+  NewBlock = 0x07;
+  Transactions = 0x02;
 
   // eth65 announcement messages (no id)
-  NewPooledTransactionHashes = 3;
+  NewPooledTransactionHashes = 0x08;
 
   // eth66 messages with request-id
-  GetBlockHeaders = 4;
-  GetBlockBodies = 5;
-  GetNodeData = 6;
-  GetReceipts = 7;
-  GetPooledTransactions = 8;
-  BlockHeaders = 9;
-  BlockBodies = 10;
-  NodeData = 11;
-  Receipts = 12;
-  PooledTransactions = 13;
-
+  GetBlockHeaders = 0x03;
+  GetBlockBodies = 0x05;
+  GetNodeData = 0x0d;
+  GetReceipts = 0x0f;
+  GetPooledTransactions = 0x09;
+  BlockHeaders = 0x04;
+  BlockBodies = 0x06;
+  NodeData = 0x0e;
+  Receipts = 0x10;
+  PooledTransactions = 0x0a;
 }
 
 message OutboundMessageData {
