@@ -7,23 +7,23 @@ package txpool;
 
 option go_package = "./txpool;txpool";
 
-message TxHashes { repeated types.H256 hashes = 1; }
+message TxHashes {repeated types.H256 hashes = 1;}
 
-message AddRequest { repeated bytes rlpTxs = 1; }
+message AddRequest {repeated bytes rlpTxs = 1;}
 
 enum ImportResult {
-  SUCCESS = 0;
-  ALREADY_EXISTS = 1;
-  FEE_TOO_LOW = 2;
-  STALE = 3;
-  INVALID = 4;
-  INTERNAL_ERROR = 5;
+  IMPORT_RESULT_SUCCESS = 0;
+  IMPORT_RESULT_ALREADY_EXISTS = 1;
+  IMPORT_RESULT_FEE_TOO_LOW = 2;
+  IMPORT_RESULT_STALE = 3;
+  IMPORT_RESULT_INVALID = 4;
+  IMPORT_RESULT_INTERNAL_ERROR = 5;
 }
 
-message AddReply { repeated ImportResult imported = 1; repeated string errors = 2; }
+message AddReply {repeated ImportResult imported = 1; repeated string errors = 2;}
 
-message TransactionsRequest { repeated types.H256 hashes = 1; }
-message TransactionsReply { repeated bytes rlpTxs = 1; }
+message TransactionsRequest {repeated types.H256 hashes = 1;}
+message TransactionsReply {repeated bytes rlpTxs = 1;}
 
 message OnAddRequest {}
 message OnAddReply {
